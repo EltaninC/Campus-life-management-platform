@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的请假</title>
+
+    <script type="text/javascript">
+        window.onload = function(){
+            var wor = document.getElementById("leave");
+            var len = wor.tBodies[0].rows.length;
+            for(var i=0;i<len;i++){
+                if(i%2==0){
+                    wor.tBodies[0].rows[i].style.backgroundColor="lightblue";
+                }else{
+                    wor.tBodies[0].rows[i].style.backgroundColor="lightcyan";
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body{
+            background-image: url(/2.jpg);
+            background-size: 100%;
+        }
+    </style>
+</head>
+<body>
+<!-- 请假记录表单，学生端 -->
+<table id="leave" border="1px" class="table table-bordered table-hover" style="text-align: center";>
+    <tr class="success">
+        <th style="width: 100px; height:50px;">编号</th>
+        <th style="width: 100px;">请假类型</th>
+        <th style="width: 400px;">开始时间</th>
+        <th style="width: 400px;">结束时间</th>
+        <th style="width: 100px;">是否离校</th>
+        <th style="width: 400px;">紧急联系人</th>
+        <th style="width: 200px;">目的地</th>
+        <th style="width: 500px;">请假原因</th>
+        <th style="width: 100px;">状态</th>
+    </tr>
+    <tr th:each="lea : ${session.leaList}" style="height: 40px">
+        <td th:text="${lea.s_id}">1</td>
+        <td th:text="${lea.category}">2</td>
+        <td th:text="${lea.start_Time}">3</td>
+        <td th:text="${lea.end_Time}">4</td>
+        <td th:text="${lea.l_School}">5</td>
+        <td th:text="${lea.linkManNum}">6</td>
+        <td th:text="${lea.destination}">7</td>
+        <td th:text="${lea.reason}">8</td>
+        <td th:text="${lea.status}">9</td>
+    </tr>
+
+</table>
+<p style="text-align: center; font-family: 隶书; font-size: 25px">
+    <a href="../tutoring_cat.html">返回</a>
+</p>
+</body>
+</html>

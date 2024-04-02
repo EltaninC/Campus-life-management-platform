@@ -1,0 +1,117 @@
+@charset "utf-8";
+
+* {
+    margin: 0;/*外边距*/
+    padding: 0;
+}
+
+body {
+    background: url(联想2.jpg) no-repeat;/*背景*/
+    background-size: cover;/*背景全覆盖*/
+    display: flex;
+    justify-content: center;
+    align-items: center;/*这三行使得框架居中*/
+    height: 100vh;/*html整体框架下移*/
+}
+
+.box {
+    width: 350px;
+    height: 350px;/*盒子的大小*/
+    border-top: 1px solid rgba(255,255,255,0.5);
+    border-left: 1px solid rgba(255,255,255,0.5);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    border-right: 1px solid rgba(255,255,255,0.3);/*盒子的关于背景的颜色，以及设置透明度（上下左右）*/
+    backdrop-filter: blur(10px);/*史盒子变得模糊*/
+    background: rgba(50,50,50,0.2);/*在这上面再覆盖一层 模糊的界面*/
+    display: flex;/*居中*/
+    flex-direction: column;/*垂直显示*/
+    justify-content: center;/*项目在水平上居中*/
+    align-items: center;/*水平布局居中*/
+    border-radius: 10px;/*边框的圆角效果*/
+}
+
+.box > h2 {
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 30px;/*下边距*/
+}
+
+.box .input-box {
+    display: flex;
+    flex-direction: column;/*垂直显示*/
+    box-sizing: border-box;/*box-sizing: 用于布局自动调整整体的内边距以及外边距padding以及border*/
+    margin-bottom: 10px;
+}
+
+.box .input-box label {
+    font-size: 13px;/*font-size相较与原本直接赋予文字大小而言，会根据整体视图地大小调整显示字体大小*/
+    color: rgba(255,255,255,0.9);/*字体颜色 变得有透明度*/
+    margin-bottom: 5px;/*字体两个输入框之间的边距*/
+}
+
+.box .input-box input {
+    letter-spacing: 1px;/*输入框与文字的间距，也是输入框的上边距*/
+    font-size: 14px;/*字体大小*/
+    box-sizing: border-box;/*自动调节边距关系*/
+    width: 250px;
+    height: 35px;
+    border-radius: 5px;/*输入框边框圆角*/
+    border: 1px solid rgba(255,255,255,0.5);/*边框透明度*/
+    background: rgba(255,255,255,0.2);/*输入板背景透明度*/
+    outline: none;
+    padding: 12px;
+    color: rgba(255,255,255,0.9);
+}
+
+.box .input-box input:focus {
+    border: 1px solid rgba(255,255,255,0.8);
+}
+
+.box .btn-box {
+    width: 250px;
+    flex-direction: column;
+    align-items: start;
+}/*按钮设定*/
+
+.box .btn-box > a {
+    outline: none;
+    display: block;
+    width: 250px;
+    text-align: end;
+    text-decoration: none;
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+}
+
+.box .btn-box > a:hover {
+    color: rgba(255,255,255,1);
+}
+
+.box .btn-box > div {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box .btn-box > div > button {
+    outline: none;/*设置元素无轮廓*/
+    margin-top: 10px;
+    display: block;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+
+.box .btn-box > div > button:nth-of-type(1) {
+    width: 120px;
+    height: 35px;
+    color: rgba(255,255,255,0.9);
+    border: 1px solid rgba(192, 119, 91, 0.7);
+    background: rgba(192, 119, 91, 0.5);
+}
+
+
+.box .btn-box > div > button:hover {
+    border: 1px solid rgba(251, 128, 71, 0.7);
+    background: rgba(251, 128, 71, 0.5);
+}

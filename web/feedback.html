@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style type="text/css">
+        .test{
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(Bisque,Azure);
+            border-radius: 50px;
+        }
+        body{
+            font-family: 华文楷体;
+            font-style: italic;
+            font-size: 20px;
+            line-height: 40px;
+            background-image: url("/2.jpg");
+            background-size:100%;
+        }
+        table{
+            margin: auto;
+        }
+        textarea{
+            border-radius: 15px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>反馈</title>
+    <script>
+        function back(){
+            window.location.href="help_feed.html";
+        }
+    </script>
+</head>
+<body>
+
+<div class="test" style="margin: auto">
+    <h1 style="text-align: center">辅导猫问题反馈</h1>
+
+<form action="/feed" method="post">
+    <table style="margin-top: 40px">
+        <tr><th>请选择发生问题的类型：</th></tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;
+                服务<input type="radio" name="type" value="服务">
+                账号<input type="radio" name="type" value="账号">
+                系统<input type="radio" name="type" value="系统">
+                其他<input type="radio" name="type" value="其他">
+            </td>
+        </tr>
+        <tr><td><textarea name="problem" id="" cols="40" rows="20" placeholder="请描述你遇到的场景及问题"></textarea></td></tr>
+    </table>
+    <p style="text-align: center">
+        <input type="submit" value="提交"> <input type="button" onclick="back()" value="返回">
+    </p>
+</form>
+</div>
+</body>
+</html>

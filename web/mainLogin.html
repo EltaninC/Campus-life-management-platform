@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<select onchange="location = this.value;">
+    <OPTION value='ry草稿.html' selected>注册选择</OPTION>
+    <option value="教师注册.html">教师注册</option>
+    <option value="try草稿.html">学生注册</option>
+</select>
+
+<form name="f"  method="post">
+    <div class="box">
+        <h2>Login</h2>
+        <div class="input-box">
+            <label>账号</label>
+            <center><input type="text"  id="name" name="account"></center>
+        </div>
+        <div class="input-box">
+            <label>密码</label>
+            <center><input type="password"  id="pass" name="password"></center>
+        </div><br>
+        <input type="radio" name="sort" value="s">学生<input type="radio" name="sort" value="t">老师
+        <div class="btn-box"><!--运用css的渲染-->
+            <a href="#">忘记密码?</a>
+            <div>
+                <input type="submit" value="提交">
+           </div>
+            <a href="mainLogin.html"><img src="刷新.jpg" title="点击刷新页面" width="20" height="20" ></a>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

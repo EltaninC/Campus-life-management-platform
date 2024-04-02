@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>帮助和反馈</title>
+    <script>
+        function back(){
+            window.location.href='tutoring_cat.html';
+        }
+        function to_fb(){
+            window.location.href='feedback.html';
+        }
+        function to_fbr(){
+            window.location.href='/feedback_record';
+        }
+    </script>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: honeydew;
+        }
+        .content{
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+</head>
+<br>
+<body style="text-align: center">
+<a href="1.html" style="font-size: 20px">学校应用与今日校园的关系</a></br>
+<textarea disabled style="border: white;background-color: white;width: 200px">今日校园是大学生实名内容及服务平台。</textarea><p></p>
+<a href="2.html" style="font-size: 20px">闪退/网络/黑屏等bug出现怎么办?</a></br>
+<textarea disabled style="border: white;background-color: white;width: 200px">若出现闪退/网络错误/黑屏等问题，可以进行如下操作。</textarea><p></p>
+<a href="3.html" style="font-size: 20px">课表/成绩/一卡通等校内服务不能用或不准确?</a></br>
+<textarea disabled style="border: white;background-color: white;width: 200px">请联系学校辅导员或者学工处或信息中心的老师。</textarea><p></p>
+<a href="4.html" style="font-size: 20px">【登录】忘记密码/重置密码怎么办?</a></br>
+<textarea disabled style="border: white;background-color: white;width: 200px">账号密码为学校校内身份认证体系,可以选择以下方式操作:</textarea><p></p>
+<a href="5.html" style="font-size: 20px">校园卡丢失该怎么办?</a></br>
+<textarea disabled style="border: white;background-color: white;width: 250px">校园卡为学生在校内的身份认证,丢失后，可以选择以下方式操作:</textarea><p></p>
+<div class="content">
+<input type="button" value="反馈记录" onclick="to_fbr()">
+<input type="button" value="反馈" onclick="to_fb()">
+<input type="button" value="返回" onclick="back()">
+</div>
+</body>
+</html>

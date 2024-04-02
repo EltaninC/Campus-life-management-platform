@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<br lang="en">
+
+<style>
+    body{
+        font-family: 华文楷体;
+        font-style: italic;
+        letter-spacing: 10px;
+        line-height: 30px;
+        background-image: url("/2.jpg");
+    }
+    table{
+        margin: auto;
+    }
+</style>
+<script>
+    function back(){
+        window.location.href='tutoring_cat.html';
+    }
+</script>
+<head>
+    <meta charset="UTF-8">
+    <title>请假</title>
+</head>
+<body>
+<h1 style="text-align: center">辅导猫学生请假</h1>
+<script src="info.js"></script>
+<table>
+<form action="/leave" method="post">
+        <tr>
+            <th>请假类型:</th>
+            <td>
+                <select name="Category" id="Category" >
+                <option value="事假">事假</option>
+                <option value="病假">病假</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>开始时间:</th>
+            <td>
+                <input type="datetime-local" name="StartTime" id="StartTime">
+            </td>
+        </tr>
+        <tr>
+            <th>结束时间:</th>
+            <td>
+                <input type="datetime-local" name="EndTime" id="EndTime">
+            </td>
+        </tr>
+        <tr>
+            <th>需要离校:</th>
+            <td>
+                <input type="radio" name="LeaveSchool" value="是">离校
+                <input type="radio" name="LeaveSchool" value="否">在校
+            </td>
+        </tr>
+        <tr>
+            <th>紧急联系人:</th>
+            <td>
+                <input type="text" name="LinkMan">
+            </td>
+        </tr>
+        <tr>
+            <th>目的地:</th>
+            <td>
+                <select id="province" name="Province" onchange="choose(this.value)">
+                    <option value="0">省份</option>
+                    <option value="北京市">北京市</option>
+                    <option value="天津市">天津市</option>
+                    <option value="上海市">上海市</option>
+                    <option value="重庆市">重庆市</option>
+                    <option value="河北省">河北省</option>
+                    <option value="河南省">河南省</option>
+                    <option value="云南省">云南省</option>
+                    <option value="辽宁省">辽宁省</option>
+                    <option value="黑龙江省">黑龙江省</option>
+                    <option value="湖南省">湖南省</option>
+                    <option value="安徽省">云南省</option>
+                    <option value="山东省">山东省</option>
+                    <option value="新疆维吾尔自治区">新疆维吾尔自治区</option>
+                    <option value="江苏省">江苏省</option>
+                    <option value="浙江省">浙江省</option>
+                    <option value="江西省">江西省</option>
+                    <option value="湖北省">湖北省</option>
+                    <option value="广西壮族自治区">广西壮族自治区</option>
+                    <option value="甘肃省">甘肃省</option>
+                    <option value="山西省">山西省</option>
+                    <option value="内蒙古自治区">内蒙古自治区</option>
+                    <option value="陕西省">陕西省</option>
+                    <option value="吉林省">吉林省</option>
+                    <option value="福建省">福建省</option>
+                    <option value="贵州省">贵州省</option>
+                    <option value="广东省">广东省</option>
+                    <option value="青海省">青海省</option>
+                    <option value="西藏自治区">西藏自治区</option>
+                    <option value="四川省">四川省</option>
+                    <option value="宁夏回族自治区">宁夏回族自治区</option>
+                    <option value="海南省">海南省</option>
+                    <option value="台湾省">台湾省</option>
+                    <option value="香港特别行政区">香港特别行政区</option>
+                    <option value="澳门特别行政区">澳门特别行政区</option>
+
+                </select>
+                <select id="city" name="City" disabled="disabled">
+                    <option value="0">--请选择市--</option>
+                </select>
+
+            </td>
+
+
+        </tr>
+        <tr>
+            <th>请假原因:</th>
+            <td>
+                <textarea name="LeaveCause" cols="20" rows="10"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                <input type="submit" value="提交"> <input type="button" value="返回" onclick="back()">
+            </td>
+        </tr>
+
+
+    </form>
+</table>
+
+
+</body>
+</html>

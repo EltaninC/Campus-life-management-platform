@@ -1,0 +1,1735 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>学生系统/生活服务</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        /* body 样式 */
+        body {
+            font-family: Arial;
+            margin: 0;
+        }
+
+        /* 标题 */
+        .header {
+            padding: 80px;
+            text-align: center;
+            background: darksalmon;
+            color: white;
+        }
+
+        /* 标题字体加大 */
+        .header h1 {
+            font-size: 40px;
+        }
+
+        /* 导航 */
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        /* 导航栏样式 */
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        /* 鼠标移动到链接的颜色 */
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* 列容器 */
+        .row {
+            display: -ms-flexbox; /* IE10 */
+            display: flex;
+            -ms-flex-wrap: wrap; /* IE10 */
+            flex-wrap: wrap;
+        }
+
+        /* 创建两个列 */
+        /* 边栏 */
+        .side {
+            -ms-flex: 30%; /* IE10 */
+            flex: 30%;
+            background-color: #f1f1f1;
+            padding: 20px;
+        }
+
+        /* 主要的内容区域 */
+        .main {
+            -ms-flex: 70%; /* IE10 */
+            flex: 70%;
+            background-color: white;
+            padding: 20px;
+        }
+
+        /* 底部 */
+        .footer {
+            padding: 20px;
+            text-align: center;
+            background: #aaaaaa;
+        }
+
+        /* 响应式布局 - 在屏幕设备宽度尺寸小于 700px 时, 让两栏上下堆叠显示 */
+        @media screen and (max-width: 700px) {
+            .row {
+                flex-direction: column;
+            }
+        }
+
+        /* 响应式布局 - 在屏幕设备宽度尺寸小于 400px 时, 让导航栏目上下堆叠显示 */
+        @media screen and (max-width: 400px) {
+            .navbar a {
+                float: none;
+                width: 100%;
+            }
+        }
+    </style>
+    <!--弹窗-->
+    <style type="text/css">
+        body{
+            margin: 0px;
+        }
+        .zhezhao{
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            background: #000;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+        .tankuang{
+            position: relative;
+            background: ghostwhite;
+            width: 400px;
+            height: 200px;
+            border-radius: 5px;
+            margin: 5% auto;
+            text-align: center;
+        }
+
+        table{
+            text-align: center;
+            margin:0px auto;
+            background-color: #aaaaaa;
+        }
+        #header{
+            height: 40px;
+        }
+        #header-right{
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+            background: red;
+            color: #fff;
+            right: 5px;
+            top: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>生活服务</h1>
+    <p>便利校园生活</p>
+</div>
+
+<div class="navbar">
+    <a href="/repair">报修</a>
+    <a href="/card">校园卡</a>
+    <a href="classSchedule.html">学生课表</a>
+    <a href="middle.html">返回</a>
+</div>
+
+<div class="row">
+    <div class="side">
+
+    </div>
+    <div class="main" >
+        <form name="form1" action="" method="get">
+            学院<select name="school" id="school" onChange="set_city(this, this.form.class);">
+            <option value="0">选择学院</option>
+            <option value="计算机科学与技术学院">计算机科学与技术学院</option>
+            <option value="物理学院">物理学院</option>
+        </select><br>
+            班级<select   name="class" id="class">
+            <option value="0">选择班级</option>
+        </select><br>
+            年级
+            <select id="grade">
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2022">2022</option>
+            </select><br>
+            学期
+            <select id="year">
+                <option value="一">一</option>
+                <option value="二">二</option>
+            </select><br>
+            学年
+            <select id="num">
+                <option value="2021-2022">2021-2022</option>
+                <option value="2020-2021">2020-2021</option>
+                <option value="2019-2020">2019-2020</option>
+                <option value="2018-2019">2018-2019</option>
+                <option value="2017-2018">2017-2018</option>
+            </select><br>
+        </form>
+
+        <button type="button" onclick="submit()">提交</button>
+    </div>
+</div>
+
+<div class="footer">
+</div>
+
+<div class="zhezhao" id='zhezhao'>
+    <div class="tankuang">
+        <div class="inner" id="header">
+            <table style="margin: auto;border: #333333">
+                <tr>
+                    <th>星期\节</th>
+                    <th >1-2节</th>
+                    <th >3-4节</th>
+                    <th >5-6节</th>
+                    <th >7-8节</th>
+                    <th >9-11节</th>
+                </tr>
+                <tr id="mon">
+                    <th>星期一</th>
+                    <th id="mon1"></th>
+                    <th id="mon2"></th>
+                    <th id="mon3"></th>
+                    <th id="mon4"></th>
+                    <th id="mon5"></th>
+                </tr>
+                <tr id="tus">
+                    <th id="">星期二</th>
+                    <th id="tus1"></th>
+                    <th id="tus2"></th>
+                    <th id="tus3"></th>
+                    <th id="tus4"></th>
+                    <th id="tus5"></th>
+                </tr>
+                <tr id="wen">
+                    <th >星期三</th>
+                    <th id="wen1"></th>
+                    <th id="wen2"></th>
+                    <th id="wen3"></th>
+                    <th id="wen4"></th>
+                    <th id="wen5"></th>
+                    <th></th>
+                </tr>
+                <tr >
+                    <th >星期四</th>
+                    <th id="thu1"></th>
+                    <th id="thu2"></th>
+                    <th id="thu3"></th>
+                    <th id="thu4"></th>
+                    <th id="thu5"></th>
+                </tr>
+                <tr id="fri">
+                    <th>星期五</th>
+                    <th id="fri1"></th>
+                    <th id="fri2"></th>
+                    <th id="fri3"></th>
+                    <th id="fri4"></th>
+                    <th id="fri5"></th>
+                </tr>
+            </table>
+
+            <div id="header-right" onclick="hidder()">x</div>
+        </div>
+    </div>
+</div>
+<div class="zhezhao" id='error_card'>
+    <div class="tankuang">
+        <div class="inner" id="error_text" style="text-align: center   ">
+        </div>
+        <div id="button" onclick="hidder_error_card()">x</div>
+    </div>
+</div>
+<script>
+    cities = new Object();
+    cities['计算机科学与技术学院']=new Array('软件工程1班', '计算机5班');
+    cities['物理学院']=new Array('应用物理3班');
+
+    function set_city(province, city)
+    {
+        var pv, cv;
+        var i, ii;
+
+        pv=province.value;
+        cv=city.value;
+
+        city.length=1;
+
+        if(pv=='0') return;
+        if(typeof(cities[pv])=='undefined') return;
+
+        for(i=0; i<cities[pv].length; i++)
+        {
+            ii = i+1;
+            city.options[ii] = new Option();
+            city.options[ii].text = cities[pv][i];
+            city.options[ii].value = cities[pv][i];
+        }
+
+    }
+</script>
+<script type="text/javascript">
+
+    document.getElementById('zhezhao').style.display="none";
+    document.getElementById('error_card').style.display='none';
+    function submit() {
+        var school = document.getElementById("school");
+        var aclass = document.getElementById("class");
+        var grade = document.getElementById("grade");
+        var num = document.getElementById("num");
+        var year = document.getElementById("year");
+        //重写
+        if (school.value == '0') {
+            document.getElementById('error_text').innerText = '请输入完整';
+            document.getElementById('error_card').style.display = 'block';
+        } else if (school.value == '计算机科学与技术学院') {
+            if (aclass.value == '0') {
+                document.getElementById('error_text').innerText = '请输入完整';
+                document.getElementById('error_card').style.display = 'block';
+            } else if (aclass.value == '软件工程1班') {
+                if (grade.value == '2021') {
+                    if (num.value == '2021-2022') {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = '高等数学';
+                            document.getElementById('mon2').innerText = '';
+                            document.getElementById('mon3').innerText = '中国近代史';
+                            document.getElementById('mon4').innerText = '形势与政策';
+                            document.getElementById('mon5').innerText = '计算机导论';
+                            document.getElementById('tus1').innerText = '';
+                            document.getElementById('tus2').innerText = '心理健康';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '程序设计';
+                            document.getElementById('wen1').innerText = '线性代数';
+                            document.getElementById('wen2').innerText = '高等数学';
+                            document.getElementById('wen3').innerText = '英语听说';
+                            document.getElementById('wen4').innerText = '英语听说（习题课）';
+                            document.getElementById('wen5').innerText = '程序设计';
+                            document.getElementById('thu1').innerText = '英语阅读';
+                            document.getElementById('thu2').innerText = '体育';
+                            document.getElementById('thu3').innerText = '程序设计';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '职业规划';
+                            document.getElementById('fri1').innerText = '高等数学';
+                            document.getElementById('fri2').innerText = '线性代数';
+                            document.getElementById('fri3').innerText = '中国近代史';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '高等数学';
+                            document.getElementById('mon2').innerText = '大学物理';
+                            document.getElementById('mon3').innerText = '思想道德';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = 'web程序设计';
+                            document.getElementById('tus1').innerText = '形势与政策';
+                            document.getElementById('tus2').innerText = '高等数学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '大学物理实验';
+                            document.getElementById('wen1').innerText = '大学物理';
+                            document.getElementById('wen2').innerText = '';
+                            document.getElementById('wen3').innerText = '英语听说';
+                            document.getElementById('wen4').innerText = '英语听说（习题课）';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '英语阅读';
+                            document.getElementById('thu2').innerText = '体育';
+                            document.getElementById('thu3').innerText = '离散数学';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '离散数学实验';
+                            document.getElementById('fri1').innerText = '高等数学';
+                            document.getElementById('fri2').innerText = 'Python程序设计';
+                            document.getElementById('fri3').innerText = 'java程序设计';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = 'java实验';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else {
+                        document.getElementById('error_text').innerText = '该课表不存在';
+                        document.getElementById('error_card').style.display = 'block';
+                    }
+                } else if (grade.value == '2020') {
+                    if (num.value == '2021-2022') {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = '数据结构';
+                            document.getElementById('mon2').innerText = '体育';
+                            document.getElementById('mon3').innerText = '';
+                            document.getElementById('mon4').innerText = '数据结构实验';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '线性代数';
+                            document.getElementById('tus2').innerText = '马克思主义基本理论';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '马克思主义基本理论';
+                            document.getElementById('wen2').innerText = '数据结构';
+                            document.getElementById('wen3').innerText = '数字电路';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '软件工程实践';
+                            document.getElementById('thu2').innerText = '线性代数';
+                            document.getElementById('thu3').innerText = '形势与政策';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '数字电路';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '软件工程基础';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '体育';
+                            document.getElementById('mon3').innerText = '数据库系统';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = 'C++程序设计';
+                            document.getElementById('tus1').innerText = '概率论';
+                            document.getElementById('tus2').innerText = '软件需求分析';
+                            document.getElementById('tus3').innerText = '计算机图形学';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '计算机组成原理';
+                            document.getElementById('wen2').innerText = '计算机设计与算法';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '计算机组成原理';
+                            document.getElementById('thu1').innerText = '软件开发';
+                            document.getElementById('thu2').innerText = '概率论';
+                            document.getElementById('thu3').innerText = '形势与政策';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '计算机网络';
+                            document.getElementById('fri1').innerText = '';
+                            document.getElementById('fri2').innerText = '计算机组成';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '计算机网络';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else if (num.value == '2020-2021') {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = '计算机导论';
+                            document.getElementById('mon2').innerText = '高等数学';
+                            document.getElementById('mon3').innerText = '心理健康';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '高等数学';
+                            document.getElementById('tus2').innerText = '形势与政策';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '职业规划';
+                            document.getElementById('wen2').innerText = '计算机导论';
+                            document.getElementById('wen3').innerText = '英语听说';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '英语阅读';
+                            document.getElementById('thu2').innerText = '体育';
+                            document.getElementById('thu3').innerText = '';
+                            document.getElementById('thu4').innerText = '程序设计';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '';
+                            document.getElementById('fri2').innerText = '高等数学';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '程序设计';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '大学物理';
+                            document.getElementById('mon2').innerText = '高等数学';
+                            document.getElementById('mon3').innerText = 'web程序设计';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '高等数学';
+                            document.getElementById('tus2').innerText = '';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '大学物理';
+                            document.getElementById('wen2').innerText = '';
+                            document.getElementById('wen3').innerText = '英语听说';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '英语阅读';
+                            document.getElementById('thu2').innerText = '体育';
+                            document.getElementById('thu3').innerText = '';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '高等数学';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '离散数学';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else {
+                        document.getElementById('error_text').innerText = '该课表不存在';
+                        document.getElementById('error_card').style.display = 'block';
+                    }
+                } else if (grade.value == '2019') {
+                    if (num.value == '2021-2022') {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = 'java web';
+                            document.getElementById('mon2').innerText = '计算机组成';
+                            document.getElementById('mon3').innerText = '数据库系统';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = 'Unix/Linux程序环境';
+                            document.getElementById('tus2').innerText = '软件质量';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '数据挖掘';
+                            document.getElementById('wen2').innerText = '计算机组成';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '操作系统';
+                            document.getElementById('thu1').innerText = '形势与政策';
+                            document.getElementById('thu2').innerText = '计算机网络';
+                            document.getElementById('thu3').innerText = '';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '操作系统';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '软件过程与项目管理';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '移动开发';
+                            document.getElementById('mon3').innerText = '';
+                            document.getElementById('mon4').innerText = '计算机英语';
+                            document.getElementById('mon5').innerText = '大数据分析';
+                            document.getElementById('tus1').innerText = '';
+                            document.getElementById('tus2').innerText = '';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '形势与政策';
+                            document.getElementById('wen2').innerText = '大学生就业指导';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '人机交互技术';
+                            document.getElementById('thu2').innerText = '计算机安全';
+                            document.getElementById('thu3').innerText = '';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '编译原理';
+                            document.getElementById('fri1').innerText = '';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '编译原理';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '科技文献检索';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else if (num.value == '2020-2021') {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = '数据结构';
+                            document.getElementById('mon2').innerText = '体育';
+                            document.getElementById('mon3').innerText = '';
+                            document.getElementById('mon4').innerText = '数据结构实验';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '线性代数';
+                            document.getElementById('tus2').innerText = '马克思主义基本理论';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '马克思主义基本理论';
+                            document.getElementById('wen2').innerText = '数据结构';
+                            document.getElementById('wen3').innerText = '数字电路';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '软件工程实践';
+                            document.getElementById('thu2').innerText = '线性代数';
+                            document.getElementById('thu3').innerText = '形势与政策';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '数字电路';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '软件工程基础';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '体育';
+                            document.getElementById('mon3').innerText = '数据库系统';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = 'C++程序设计';
+                            document.getElementById('tus1').innerText = '概率论';
+                            document.getElementById('tus2').innerText = '软件需求分析';
+                            document.getElementById('tus3').innerText = '计算机图形学';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '计算机组成原理';
+                            document.getElementById('wen2').innerText = '计算机设计与算法';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '计算机组成原理';
+                            document.getElementById('thu1').innerText = '软件开发';
+                            document.getElementById('thu2').innerText = '概率论';
+                            document.getElementById('thu3').innerText = '形势与政策';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '计算机网络';
+                            document.getElementById('fri1').innerText = '';
+                            document.getElementById('fri2').innerText = '计算机组成';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '计算机网络';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else if (num.value == '2019-2020') {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = '高等数学';
+                            document.getElementById('mon2').innerText = '';
+                            document.getElementById('mon3').innerText = '中国近代史';
+                            document.getElementById('mon4').innerText = '形势与政策';
+                            document.getElementById('mon5').innerText = '计算机导论';
+                            document.getElementById('tus1').innerText = '';
+                            document.getElementById('tus2').innerText = '心理健康';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '程序设计';
+                            document.getElementById('wen1').innerText = '线性代数';
+                            document.getElementById('wen2').innerText = '高等数学';
+                            document.getElementById('wen3').innerText = '英语听说';
+                            document.getElementById('wen4').innerText = '英语听说（习题课）';
+                            document.getElementById('wen5').innerText = '程序设计';
+                            document.getElementById('thu1').innerText = '英语阅读';
+                            document.getElementById('thu2').innerText = '体育';
+                            document.getElementById('thu3').innerText = '程序设计';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '职业规划';
+                            document.getElementById('fri1').innerText = '高等数学';
+                            document.getElementById('fri2').innerText = '线性代数';
+                            document.getElementById('fri3').innerText = '中国近代史';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '高等数学';
+                            document.getElementById('mon2').innerText = '大学物理';
+                            document.getElementById('mon3').innerText = '思想道德';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = 'web程序设计';
+                            document.getElementById('tus1').innerText = '形势与政策';
+                            document.getElementById('tus2').innerText = '高等数学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '大学物理实验';
+                            document.getElementById('wen1').innerText = '大学物理';
+                            document.getElementById('wen2').innerText = '';
+                            document.getElementById('wen3').innerText = '英语听说';
+                            document.getElementById('wen4').innerText = '英语听说（习题课）';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '英语阅读';
+                            document.getElementById('thu2').innerText = '体育';
+                            document.getElementById('thu3').innerText = '离散数学';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '离散数学实验';
+                            document.getElementById('fri1').innerText = '高等数学';
+                            document.getElementById('fri2').innerText = 'Python程序设计';
+                            document.getElementById('fri3').innerText = 'java程序设计';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = 'java实验';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else {
+                        document.getElementById('error_text').innerText = '该课表不存在';
+                        document.getElementById('error_card').style.display = 'block';
+                    }
+                } else if (grade.value == '2018') {
+                    if (num.value == '2021-2022') {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '';
+                            document.getElementById('mon3').innerText = '';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '';
+                            document.getElementById('tus2').innerText = '';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '';
+                            document.getElementById('wen2').innerText = '数字图像处理';
+                            document.getElementById('wen3').innerText = '形势与政策';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '';
+                            document.getElementById('thu2').innerText = '';
+                            document.getElementById('thu3').innerText = '人工智能导论';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '';
+                            document.getElementById('mon3').innerText = '';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '';
+                            document.getElementById('tus2').innerText = '';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '';
+                            document.getElementById('wen2').innerText = '';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '';
+                            document.getElementById('thu2').innerText = '';
+                            document.getElementById('thu3').innerText = '';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else if (num.value == '2020-2021') {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = 'java web';
+                            document.getElementById('mon2').innerText = '计算机组成';
+                            document.getElementById('mon3').innerText = '数据库系统';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = 'Unix/Linux程序环境';
+                            document.getElementById('tus2').innerText = '软件质量';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '数据挖掘';
+                            document.getElementById('wen2').innerText = '计算机组成';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '操作系统';
+                            document.getElementById('thu1').innerText = '形势与政策';
+                            document.getElementById('thu2').innerText = '计算机网络';
+                            document.getElementById('thu3').innerText = '';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '操作系统';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '软件过程与项目管理';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '移动开发';
+                            document.getElementById('mon3').innerText = '';
+                            document.getElementById('mon4').innerText = '计算机英语';
+                            document.getElementById('mon5').innerText = '大数据分析';
+                            document.getElementById('tus1').innerText = '';
+                            document.getElementById('tus2').innerText = '';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '形势与政策';
+                            document.getElementById('wen2').innerText = '大学生就业指导';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '人机交互技术';
+                            document.getElementById('thu2').innerText = '计算机安全';
+                            document.getElementById('thu3').innerText = '';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '编译原理';
+                            document.getElementById('fri1').innerText = '';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '编译原理';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '科技文献检索';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else if (num.value == '2019-2020') {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = '数据结构';
+                            document.getElementById('mon2').innerText = '体育';
+                            document.getElementById('mon3').innerText = '';
+                            document.getElementById('mon4').innerText = '数据结构实验';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '线性代数';
+                            document.getElementById('tus2').innerText = '马克思主义基本理论';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '马克思主义基本理论';
+                            document.getElementById('wen2').innerText = '数据结构';
+                            document.getElementById('wen3').innerText = '数字电路';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '软件工程实践';
+                            document.getElementById('thu2').innerText = '线性代数';
+                            document.getElementById('thu3').innerText = '形势与政策';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '数字电路';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '软件工程基础';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '体育';
+                            document.getElementById('mon3').innerText = '数据库系统';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = 'C++程序设计';
+                            document.getElementById('tus1').innerText = '概率论';
+                            document.getElementById('tus2').innerText = '软件需求分析';
+                            document.getElementById('tus3').innerText = '计算机图形学';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '计算机组成原理';
+                            document.getElementById('wen2').innerText = '计算机设计与算法';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '计算机组成原理';
+                            document.getElementById('thu1').innerText = '软件开发';
+                            document.getElementById('thu2').innerText = '概率论';
+                            document.getElementById('thu3').innerText = '形势与政策';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '计算机网络';
+                            document.getElementById('fri1').innerText = '';
+                            document.getElementById('fri2').innerText = '计算机组成';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '计算机网络';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = '高等数学';
+                            document.getElementById('mon2').innerText = '';
+                            document.getElementById('mon3').innerText = '中国近代史';
+                            document.getElementById('mon4').innerText = '形势与政策';
+                            document.getElementById('mon5').innerText = '计算机导论';
+                            document.getElementById('tus1').innerText = '';
+                            document.getElementById('tus2').innerText = '心理健康';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '程序设计';
+                            document.getElementById('wen1').innerText = '线性代数';
+                            document.getElementById('wen2').innerText = '高等数学';
+                            document.getElementById('wen3').innerText = '英语听说';
+                            document.getElementById('wen4').innerText = '英语听说（习题课）';
+                            document.getElementById('wen5').innerText = '程序设计';
+                            document.getElementById('thu1').innerText = '英语阅读';
+                            document.getElementById('thu2').innerText = '体育';
+                            document.getElementById('thu3').innerText = '程序设计';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '职业规划';
+                            document.getElementById('fri1').innerText = '高等数学';
+                            document.getElementById('fri2').innerText = '线性代数';
+                            document.getElementById('fri3').innerText = '中国近代史';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '高等数学';
+                            document.getElementById('mon2').innerText = '大学物理';
+                            document.getElementById('mon3').innerText = '思想道德';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = 'web程序设计';
+                            document.getElementById('tus1').innerText = '形势与政策';
+                            document.getElementById('tus2').innerText = '高等数学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '大学物理实验';
+                            document.getElementById('wen1').innerText = '大学物理';
+                            document.getElementById('wen2').innerText = '';
+                            document.getElementById('wen3').innerText = '英语听说';
+                            document.getElementById('wen4').innerText = '英语听说（习题课）';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '英语阅读';
+                            document.getElementById('thu2').innerText = '体育';
+                            document.getElementById('thu3').innerText = '离散数学';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '离散数学实验';
+                            document.getElementById('fri1').innerText = '高等数学';
+                            document.getElementById('fri2').innerText = 'Python程序设计';
+                            document.getElementById('fri3').innerText = 'java程序设计';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = 'java实验';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    }
+                }
+            } else if (aclass.value == '计算机5班') {
+                if (grade.value == '2021') {
+                    if (num.value == '2021-2022') {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = '高等数学';
+                            document.getElementById('mon2').innerText = '';
+                            document.getElementById('mon3').innerText = '';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '';
+                            document.getElementById('tus2').innerText = '高等数学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '计算机导论';
+                            document.getElementById('wen1').innerText = '线性代数';
+                            document.getElementById('wen2').innerText = '心理健康';
+                            document.getElementById('wen3').innerText = '程序设计';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '';
+                            document.getElementById('thu2').innerText = '';
+                            document.getElementById('thu3').innerText = '';
+                            document.getElementById('thu4').innerText = '体育';
+                            document.getElementById('thu5').innerText = '程序设计';
+                            document.getElementById('fri1').innerText = '高等数学';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '大学生职业规划';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '大学物理';
+                            document.getElementById('mon3').innerText = '';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '人工智能导论';
+                            document.getElementById('tus1').innerText = '';
+                            document.getElementById('tus2').innerText = '高等数学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '信息安全导论';
+                            document.getElementById('wen1').innerText = '大学物理';
+                            document.getElementById('wen2').innerText = '';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '离散数学';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '大学物理';
+                            document.getElementById('thu2').innerText = '';
+                            document.getElementById('thu3').innerText = '体育';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '离散数学';
+                            document.getElementById('fri2').innerText = 'Python程序设计';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else {
+                        document.getElementById('error_text').innerText = '该课表不存在';
+                        document.getElementById('error_card').style.display = 'block';
+                    }
+
+                } else if (grade.value == '2020') {
+                    if (num.value == '2020-2021') {
+                        if (year.value == '一') {
+                            document.getElementById('mon1').innerText = '高等数学';
+                            document.getElementById('mon2').innerText = '';
+                            document.getElementById('mon3').innerText = '';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '';
+                            document.getElementById('tus2').innerText = '高等数学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '计算机导论';
+                            document.getElementById('wen1').innerText = '线性代数';
+                            document.getElementById('wen2').innerText = '心理健康';
+                            document.getElementById('wen3').innerText = '程序设计';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '';
+                            document.getElementById('thu2').innerText = '';
+                            document.getElementById('thu3').innerText = '';
+                            document.getElementById('thu4').innerText = '体育';
+                            document.getElementById('thu5').innerText = '程序设计';
+                            document.getElementById('fri1').innerText = '高等数学';
+                            document.getElementById('fri2').innerText = '';
+                            document.getElementById('fri3').innerText = '大学生职业规划';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '大学物理';
+                            document.getElementById('mon3').innerText = '';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '人工智能导论';
+                            document.getElementById('tus1').innerText = '';
+                            document.getElementById('tus2').innerText = '高等数学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '信息安全导论';
+                            document.getElementById('wen1').innerText = '大学物理';
+                            document.getElementById('wen2').innerText = '';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '离散数学';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '大学物理';
+                            document.getElementById('thu2').innerText = '';
+                            document.getElementById('thu3').innerText = '体育';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '离散数学';
+                            document.getElementById('fri2').innerText = 'Python程序设计';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else {
+                        document.getElementById('error_text').innerText = '该课表不存在';
+                        document.getElementById('error_card').style.display = 'block';
+                    }
+                }
+            } else if (grade.value == '2019') {
+                if (num.value == '2019-2020') {
+                    if (year.value == '一') {
+                        document.getElementById('mon1').innerText = '高等数学';
+                        document.getElementById('mon2').innerText = '';
+                        document.getElementById('mon3').innerText = '';
+                        document.getElementById('mon4').innerText = '';
+                        document.getElementById('mon5').innerText = '';
+                        document.getElementById('tus1').innerText = '';
+                        document.getElementById('tus2').innerText = '高等数学';
+                        document.getElementById('tus3').innerText = '';
+                        document.getElementById('tus4').innerText = '';
+                        document.getElementById('tus5').innerText = '计算机导论';
+                        document.getElementById('wen1').innerText = '线性代数';
+                        document.getElementById('wen2').innerText = '心理健康';
+                        document.getElementById('wen3').innerText = '程序设计';
+                        document.getElementById('wen4').innerText = '';
+                        document.getElementById('wen5').innerText = '';
+                        document.getElementById('thu1').innerText = '';
+                        document.getElementById('thu2').innerText = '';
+                        document.getElementById('thu3').innerText = '';
+                        document.getElementById('thu4').innerText = '体育';
+                        document.getElementById('thu5').innerText = '程序设计';
+                        document.getElementById('fri1').innerText = '高等数学';
+                        document.getElementById('fri2').innerText = '';
+                        document.getElementById('fri3').innerText = '大学生职业规划';
+                        document.getElementById('fri4').innerText = '';
+                        document.getElementById('fri5').innerText = '';
+                        document.getElementById('zhezhao').style.display = 'block';
+                    } else {
+                        document.getElementById('mon1').innerText = '';
+                        document.getElementById('mon2').innerText = '大学物理';
+                        document.getElementById('mon3').innerText = '';
+                        document.getElementById('mon4').innerText = '';
+                        document.getElementById('mon5').innerText = '人工智能导论';
+                        document.getElementById('tus1').innerText = '';
+                        document.getElementById('tus2').innerText = '高等数学';
+                        document.getElementById('tus3').innerText = '';
+                        document.getElementById('tus4').innerText = '';
+                        document.getElementById('tus5').innerText = '信息安全导论';
+                        document.getElementById('wen1').innerText = '大学物理';
+                        document.getElementById('wen2').innerText = '';
+                        document.getElementById('wen3').innerText = '';
+                        document.getElementById('wen4').innerText = '离散数学';
+                        document.getElementById('wen5').innerText = '';
+                        document.getElementById('thu1').innerText = '大学物理';
+                        document.getElementById('thu2').innerText = '';
+                        document.getElementById('thu3').innerText = '体育';
+                        document.getElementById('thu4').innerText = '';
+                        document.getElementById('thu5').innerText = '';
+                        document.getElementById('fri1').innerText = '离散数学';
+                        document.getElementById('fri2').innerText = 'Python程序设计';
+                        document.getElementById('fri3').innerText = '';
+                        document.getElementById('fri4').innerText = '';
+                        document.getElementById('fri5').innerText = '';
+                        document.getElementById('zhezhao').style.display = 'block';
+                    }
+                } else {
+                    document.getElementById('error_text').innerText = '该课表不存在';
+                    document.getElementById('error_card').style.display = 'block';
+                }
+            } else if (grade.value == '2018') {
+                if (num.value == '2018-2019') {
+                    if (year.value == '一') {
+                        document.getElementById('mon1').innerText = '高等数学';
+                        document.getElementById('mon2').innerText = '';
+                        document.getElementById('mon3').innerText = '';
+                        document.getElementById('mon4').innerText = '';
+                        document.getElementById('mon5').innerText = '';
+                        document.getElementById('tus1').innerText = '';
+                        document.getElementById('tus2').innerText = '高等数学';
+                        document.getElementById('tus3').innerText = '';
+                        document.getElementById('tus4').innerText = '';
+                        document.getElementById('tus5').innerText = '计算机导论';
+                        document.getElementById('wen1').innerText = '线性代数';
+                        document.getElementById('wen2').innerText = '心理健康';
+                        document.getElementById('wen3').innerText = '程序设计';
+                        document.getElementById('wen4').innerText = '';
+                        document.getElementById('wen5').innerText = '';
+                        document.getElementById('thu1').innerText = '';
+                        document.getElementById('thu2').innerText = '';
+                        document.getElementById('thu3').innerText = '';
+                        document.getElementById('thu4').innerText = '体育';
+                        document.getElementById('thu5').innerText = '程序设计';
+                        document.getElementById('fri1').innerText = '高等数学';
+                        document.getElementById('fri2').innerText = '';
+                        document.getElementById('fri3').innerText = '大学生职业规划';
+                        document.getElementById('fri4').innerText = '';
+                        document.getElementById('fri5').innerText = '';
+                        document.getElementById('zhezhao').style.display = 'block';
+                    } else {
+                        document.getElementById('mon1').innerText = '';
+                        document.getElementById('mon2').innerText = '大学物理';
+                        document.getElementById('mon3').innerText = '';
+                        document.getElementById('mon4').innerText = '';
+                        document.getElementById('mon5').innerText = '人工智能导论';
+                        document.getElementById('tus1').innerText = '';
+                        document.getElementById('tus2').innerText = '高等数学';
+                        document.getElementById('tus3').innerText = '';
+                        document.getElementById('tus4').innerText = '';
+                        document.getElementById('tus5').innerText = '信息安全导论';
+                        document.getElementById('wen1').innerText = '大学物理';
+                        document.getElementById('wen2').innerText = '';
+                        document.getElementById('wen3').innerText = '';
+                        document.getElementById('wen4').innerText = '离散数学';
+                        document.getElementById('wen5').innerText = '';
+                        document.getElementById('thu1').innerText = '大学物理';
+                        document.getElementById('thu2').innerText = '';
+                        document.getElementById('thu3').innerText = '体育';
+                        document.getElementById('thu4').innerText = '';
+                        document.getElementById('thu5').innerText = '';
+                        document.getElementById('fri1').innerText = '离散数学';
+                        document.getElementById('fri2').innerText = 'Python程序设计';
+                        document.getElementById('fri3').innerText = '';
+                        document.getElementById('fri4').innerText = '';
+                        document.getElementById('fri5').innerText = '';
+                        document.getElementById('zhezhao').style.display = 'block';
+                    }
+                } else {
+                    document.getElementById('error_text').innerText = '该课表不存在';
+                    document.getElementById('error_card').style.display = 'block';
+                }
+            }
+        } else if (school.value == '物理学院') {
+            if (aclass.value == '0') {
+                document.getElementById('error_text').innerText = '请输入完整';
+                document.getElementById('error_card').style.display = 'block';
+            } else if (aclass.value == '应用物理3班') {
+                if (grade.value == '2021') {
+                    if (num.value == '2021-2022') {
+                        if (num.value == '一') {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '高等数学';
+                            document.getElementById('mon3').innerText = '大学生生涯规划';
+                            document.getElementById('mon4').innerText = '心理健康';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '中国近代史';
+                            document.getElementById('tus2').innerText = '高等数学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '';
+                            document.getElementById('wen2').innerText = '英语阅读';
+                            document.getElementById('wen3').innerText = '专业导读';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '英语听说';
+                            document.getElementById('thu2').innerText = '高等数学';
+                            document.getElementById('thu3').innerText = '信息技术应用';
+                            document.getElementById('thu4').innerText = '体育';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '信息技术';
+                            document.getElementById('fri2').innerText = '英语听说';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '中国近代史';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '大学物理';
+                            document.getElementById('mon2').innerText = '工程图学';
+                            document.getElementById('mon3').innerText = '工程图学';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '英语阅读';
+                            document.getElementById('tus2').innerText = '英语阅读（习题课）';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '物理实验';
+                            document.getElementById('wen1').innerText = '高等数学';
+                            document.getElementById('wen2').innerText = '工程图学';
+                            document.getElementById('wen3').innerText = '工程图学';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '创新创业实践';
+                            document.getElementById('thu2').innerText = '英语听说';
+                            document.getElementById('thu3').innerText = '体育';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '思想道德';
+                            document.getElementById('fri1').innerText = '大学物理';
+                            document.getElementById('fri2').innerText = '高等数学';
+                            document.getElementById('fri3').innerText = '高级语言设计';
+                            document.getElementById('fri4').innerText = '高级语言设计';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else {
+                        document.getElementById('error_text').innerText = '该课表不存在';
+                        document.getElementById('error_card').style.display = 'block';
+                    }
+                } else if (grade.value == '2020') {
+                    if (num.value == '2021-2022') {
+                        if (num.value == '一') {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '工程材料';
+                            document.getElementById('mon3').innerText = '体育';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '线性代数';
+                            document.getElementById('tus2').innerText = '流体力学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '毛泽东理论体系';
+                            document.getElementById('wen1').innerText = '理论力学';
+                            document.getElementById('wen2').innerText = '大学物理';
+                            document.getElementById('wen3').innerText = '三维建模及应用';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '马克思主义';
+                            document.getElementById('thu1').innerText = '工程材料';
+                            document.getElementById('thu2').innerText = '流体力学';
+                            document.getElementById('thu3').innerText = '马克思主义';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '大学物理';
+                            document.getElementById('fri2').innerText = '理论力学';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '工程材料基础实验';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '材料力学';
+                            document.getElementById('mon2').innerText = '电工电子学';
+                            document.getElementById('mon3').innerText = '体育';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '习近平思想';
+                            document.getElementById('tus1').innerText = '概率论';
+                            document.getElementById('tus2').innerText = '机械原理';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '复变函数';
+                            document.getElementById('wen2').innerText = '概率论';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '机械原理';
+                            document.getElementById('thu2').innerText = '电子电工学';
+                            document.getElementById('thu3').innerText = '计算方法';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '材料力学';
+                            document.getElementById('fri2').innerText = '传热学';
+                            document.getElementById('fri3').innerText = '材料成形技术基础';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else if (num.value == '2020-2021') {
+                        if (num.value == '一') {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '高等数学';
+                            document.getElementById('mon3').innerText = '大学生生涯规划';
+                            document.getElementById('mon4').innerText = '心理健康';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '中国近代史';
+                            document.getElementById('tus2').innerText = '高等数学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '';
+                            document.getElementById('wen2').innerText = '英语阅读';
+                            document.getElementById('wen3').innerText = '专业导读';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '英语听说';
+                            document.getElementById('thu2').innerText = '高等数学';
+                            document.getElementById('thu3').innerText = '信息技术应用';
+                            document.getElementById('thu4').innerText = '体育';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '信息技术';
+                            document.getElementById('fri2').innerText = '英语听说';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '中国近代史';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '大学物理';
+                            document.getElementById('mon2').innerText = '工程图学';
+                            document.getElementById('mon3').innerText = '工程图学';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '英语阅读';
+                            document.getElementById('tus2').innerText = '英语阅读（习题课）';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '物理实验';
+                            document.getElementById('wen1').innerText = '高等数学';
+                            document.getElementById('wen2').innerText = '工程图学';
+                            document.getElementById('wen3').innerText = '工程图学';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '创新创业实践';
+                            document.getElementById('thu2').innerText = '英语听说';
+                            document.getElementById('thu3').innerText = '体育';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '思想道德';
+                            document.getElementById('fri1').innerText = '大学物理';
+                            document.getElementById('fri2').innerText = '高等数学';
+                            document.getElementById('fri3').innerText = '高级语言设计';
+                            document.getElementById('fri4').innerText = '高级语言设计';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else {
+                        document.getElementById('error_text').innerText = '该课表不存在';
+                        document.getElementById('error_card').style.display = 'block';
+                    }
+                } else if (grade.value == '2019') {
+                    if (num.value == '2021-2022') {
+                        if (num.value == '一') {
+                            document.getElementById('mon1').innerText = '机械设计';
+                            document.getElementById('mon2').innerText = '控制工程基础';
+                            document.getElementById('mon3').innerText = '机械制造技术基础';
+                            document.getElementById('mon4').innerText = '形势政策';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '电工电子学';
+                            document.getElementById('tus2').innerText = '机械制造技术';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '机械制造技术';
+                            document.getElementById('wen1').innerText = '液压传动与气动';
+                            document.getElementById('wen2').innerText = '机械设计';
+                            document.getElementById('wen3').innerText = '互换性与测量技术';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '化学与环境';
+                            document.getElementById('thu2').innerText = '电子电工学';
+                            document.getElementById('thu3').innerText = '单片机原理';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '机床及可编程控制器';
+                            document.getElementById('fri1').innerText = '化学与环境';
+                            document.getElementById('fri2').innerText = '液压传动与气动';
+                            document.getElementById('fri3').innerText = '电子线路';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '材料力学';
+                            document.getElementById('mon2').innerText = '电工电子学';
+                            document.getElementById('mon3').innerText = '体育';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '习近平思想';
+                            document.getElementById('tus1').innerText = '概率论';
+                            document.getElementById('tus2').innerText = '机械原理';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '复变函数';
+                            document.getElementById('wen2').innerText = '概率论';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '机械原理';
+                            document.getElementById('thu2').innerText = '电子电工学';
+                            document.getElementById('thu3').innerText = '计算方法';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '材料力学';
+                            document.getElementById('fri2').innerText = '传热学';
+                            document.getElementById('fri3').innerText = '材料成形技术基础';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else if (num.value == '2020-2021') {
+                        if (num.value == '一') {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '工程材料';
+                            document.getElementById('mon3').innerText = '体育';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '线性代数';
+                            document.getElementById('tus2').innerText = '流体力学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '毛泽东理论体系';
+                            document.getElementById('wen1').innerText = '理论力学';
+                            document.getElementById('wen2').innerText = '大学物理';
+                            document.getElementById('wen3').innerText = '三维建模及应用';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '马克思主义';
+                            document.getElementById('thu1').innerText = '工程材料';
+                            document.getElementById('thu2').innerText = '流体力学';
+                            document.getElementById('thu3').innerText = '马克思主义';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '大学物理';
+                            document.getElementById('fri2').innerText = '理论力学';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '工程材料基础实验';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '材料力学';
+                            document.getElementById('mon2').innerText = '电工电子学';
+                            document.getElementById('mon3').innerText = '体育';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '习近平思想';
+                            document.getElementById('tus1').innerText = '概率论';
+                            document.getElementById('tus2').innerText = '机械原理';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '复变函数';
+                            document.getElementById('wen2').innerText = '概率论';
+                            document.getElementById('wen3').innerText = '';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '机械原理';
+                            document.getElementById('thu2').innerText = '电子电工学';
+                            document.getElementById('thu3').innerText = '计算方法';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '材料力学';
+                            document.getElementById('fri2').innerText = '传热学';
+                            document.getElementById('fri3').innerText = '材料成形技术基础';
+                            document.getElementById('fri4').innerText = '';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else if (num.value == '2019-2020') {
+                        if (num.value == '一') {
+                            document.getElementById('mon1').innerText = '';
+                            document.getElementById('mon2').innerText = '高等数学';
+                            document.getElementById('mon3').innerText = '大学生生涯规划';
+                            document.getElementById('mon4').innerText = '心理健康';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '中国近代史';
+                            document.getElementById('tus2').innerText = '高等数学';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '';
+                            document.getElementById('wen1').innerText = '';
+                            document.getElementById('wen2').innerText = '英语阅读';
+                            document.getElementById('wen3').innerText = '专业导读';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '英语听说';
+                            document.getElementById('thu2').innerText = '高等数学';
+                            document.getElementById('thu3').innerText = '信息技术应用';
+                            document.getElementById('thu4').innerText = '体育';
+                            document.getElementById('thu5').innerText = '';
+                            document.getElementById('fri1').innerText = '信息技术';
+                            document.getElementById('fri2').innerText = '英语听说';
+                            document.getElementById('fri3').innerText = '';
+                            document.getElementById('fri4').innerText = '中国近代史';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        } else {
+                            document.getElementById('mon1').innerText = '大学物理';
+                            document.getElementById('mon2').innerText = '工程图学';
+                            document.getElementById('mon3').innerText = '工程图学';
+                            document.getElementById('mon4').innerText = '';
+                            document.getElementById('mon5').innerText = '';
+                            document.getElementById('tus1').innerText = '英语阅读';
+                            document.getElementById('tus2').innerText = '英语阅读（习题课）';
+                            document.getElementById('tus3').innerText = '';
+                            document.getElementById('tus4').innerText = '';
+                            document.getElementById('tus5').innerText = '物理实验';
+                            document.getElementById('wen1').innerText = '高等数学';
+                            document.getElementById('wen2').innerText = '工程图学';
+                            document.getElementById('wen3').innerText = '工程图学';
+                            document.getElementById('wen4').innerText = '';
+                            document.getElementById('wen5').innerText = '';
+                            document.getElementById('thu1').innerText = '创新创业实践';
+                            document.getElementById('thu2').innerText = '英语听说';
+                            document.getElementById('thu3').innerText = '体育';
+                            document.getElementById('thu4').innerText = '';
+                            document.getElementById('thu5').innerText = '思想道德';
+                            document.getElementById('fri1').innerText = '大学物理';
+                            document.getElementById('fri2').innerText = '高等数学';
+                            document.getElementById('fri3').innerText = '高级语言设计';
+                            document.getElementById('fri4').innerText = '高级语言设计';
+                            document.getElementById('fri5').innerText = '';
+                            document.getElementById('zhezhao').style.display = 'block';
+                        }
+                    } else {
+                        document.getElementById('error_text').innerText = '该课表不存在';
+                        document.getElementById('error_card').style.display = 'block';
+                    }
+                }
+            } else if (grade.value == '2018') {
+                if (num.value == '2021-2022') {
+                    document.getElementById('mon1').innerText = '机械震动基础';
+                    document.getElementById('mon2').innerText = '';
+                    document.getElementById('mon3').innerText = '液压系统设计';
+                    document.getElementById('mon4').innerText = '';
+                    document.getElementById('mon5').innerText = '';
+                    document.getElementById('tus1').innerText = '机器人技术应用';
+                    document.getElementById('tus2').innerText = '现代控制理论';
+                    document.getElementById('tus3').innerText = '';
+                    document.getElementById('tus4').innerText = '';
+                    document.getElementById('tus5').innerText = '';
+                    document.getElementById('wen1').innerText = '机械震动基础';
+                    document.getElementById('wen2').innerText = '';
+                    document.getElementById('wen3').innerText = '专题报告';
+                    document.getElementById('wen4').innerText = '';
+                    document.getElementById('wen5').innerText = '';
+                    document.getElementById('thu1').innerText = '现代控制理论';
+                    document.getElementById('thu2').innerText = '';
+                    document.getElementById('thu3').innerText = '自动化系统';
+                    document.getElementById('thu4').innerText = '';
+                    document.getElementById('thu5').innerText = '形势与政策';
+                    document.getElementById('fri1').innerText = '';
+                    document.getElementById('fri2').innerText = '机器人控制理论';
+                    document.getElementById('fri3').innerText = '机械工程项目管理';
+                    document.getElementById('fri4').innerText = '';
+                    document.getElementById('fri5').innerText = '';
+                    document.getElementById('zhezhao').style.display = 'block';
+                } else {
+                    document.getElementById('mon1').innerText = '';
+                    document.getElementById('mon2').innerText = '';
+                    document.getElementById('mon3').innerText = '';
+                    document.getElementById('mon4').innerText = '';
+                    document.getElementById('mon5').innerText = '';
+                    document.getElementById('tus1').innerText = '';
+                    document.getElementById('tus2').innerText = '';
+                    document.getElementById('tus3').innerText = '';
+                    document.getElementById('tus4').innerText = '';
+                    document.getElementById('tus5').innerText = '';
+                    document.getElementById('wen1').innerText = '';
+                    document.getElementById('wen2').innerText = '';
+                    document.getElementById('wen3').innerText = '形势与政策';
+                    document.getElementById('wen4').innerText = '';
+                    document.getElementById('wen5').innerText = '';
+                    document.getElementById('thu1').innerText = '';
+                    document.getElementById('thu2').innerText = '';
+                    document.getElementById('thu3').innerText = '';
+                    document.getElementById('thu4').innerText = '';
+                    document.getElementById('thu5').innerText = '';
+                    document.getElementById('fri1').innerText = '';
+                    document.getElementById('fri2').innerText = '';
+                    document.getElementById('fri3').innerText = '';
+                    document.getElementById('fri4').innerText = '';
+                    document.getElementById('fri5').innerText = '';
+                    document.getElementById('zhezhao').style.display = 'block';
+                }
+            } else if (num.value == '2020-2021') {
+                document.getElementById('mon1').innerText = '机械设计';
+                document.getElementById('mon2').innerText = '控制工程基础';
+                document.getElementById('mon3').innerText = '机械制造技术基础';
+                document.getElementById('mon4').innerText = '形势政策';
+                document.getElementById('mon5').innerText = '';
+                document.getElementById('tus1').innerText = '电工电子学';
+                document.getElementById('tus2').innerText = '机械制造技术';
+                document.getElementById('tus3').innerText = '';
+                document.getElementById('tus4').innerText = '';
+                document.getElementById('tus5').innerText = '机械制造技术';
+                document.getElementById('wen1').innerText = '液压传动与气动';
+                document.getElementById('wen2').innerText = '机械设计';
+                document.getElementById('wen3').innerText = '互换性与测量技术';
+                document.getElementById('wen4').innerText = '';
+                document.getElementById('wen5').innerText = '';
+                document.getElementById('thu1').innerText = '化学与环境';
+                document.getElementById('thu2').innerText = '电子电工学';
+                document.getElementById('thu3').innerText = '单片机原理';
+                document.getElementById('thu4').innerText = '';
+                document.getElementById('thu5').innerText = '机床及可编程控制器';
+                document.getElementById('fri1').innerText = '化学与环境';
+                document.getElementById('fri2').innerText = '液压传动与气动';
+                document.getElementById('fri3').innerText = '电子线路';
+                document.getElementById('fri4').innerText = '';
+                document.getElementById('fri5').innerText = '';
+                document.getElementById('zhezhao').style.display = 'block';
+            } else {
+                document.getElementById('mon1').innerText = '材料力学';
+                document.getElementById('mon2').innerText = '电工电子学';
+                document.getElementById('mon3').innerText = '体育';
+                document.getElementById('mon4').innerText = '';
+                document.getElementById('mon5').innerText = '习近平思想';
+                document.getElementById('tus1').innerText = '概率论';
+                document.getElementById('tus2').innerText = '机械原理';
+                document.getElementById('tus3').innerText = '';
+                document.getElementById('tus4').innerText = '';
+                document.getElementById('tus5').innerText = '';
+                document.getElementById('wen1').innerText = '复变函数';
+                document.getElementById('wen2').innerText = '概率论';
+                document.getElementById('wen3').innerText = '';
+                document.getElementById('wen4').innerText = '';
+                document.getElementById('wen5').innerText = '';
+                document.getElementById('thu1').innerText = '机械原理';
+                document.getElementById('thu2').innerText = '电子电工学';
+                document.getElementById('thu3').innerText = '计算方法';
+                document.getElementById('thu4').innerText = '';
+                document.getElementById('thu5').innerText = '';
+                document.getElementById('fri1').innerText = '材料力学';
+                document.getElementById('fri2').innerText = '传热学';
+                document.getElementById('fri3').innerText = '材料成形技术基础';
+                document.getElementById('fri4').innerText = '';
+                document.getElementById('fri5').innerText = '';
+                document.getElementById('zhezhao').style.display = 'block';
+            }
+        } else if (num.value == '2019-2020') {
+            if (num.value == '一') {
+                document.getElementById('mon1').innerText = '';
+                document.getElementById('mon2').innerText = '工程材料';
+                document.getElementById('mon3').innerText = '体育';
+                document.getElementById('mon4').innerText = '';
+                document.getElementById('mon5').innerText = '';
+                document.getElementById('tus1').innerText = '线性代数';
+                document.getElementById('tus2').innerText = '流体力学';
+                document.getElementById('tus3').innerText = '';
+                document.getElementById('tus4').innerText = '';
+                document.getElementById('tus5').innerText = '毛泽东理论体系';
+                document.getElementById('wen1').innerText = '理论力学';
+                document.getElementById('wen2').innerText = '大学物理';
+                document.getElementById('wen3').innerText = '三维建模及应用';
+                document.getElementById('wen4').innerText = '';
+                document.getElementById('wen5').innerText = '马克思主义';
+                document.getElementById('thu1').innerText = '工程材料';
+                document.getElementById('thu2').innerText = '流体力学';
+                document.getElementById('thu3').innerText = '马克思主义';
+                document.getElementById('thu4').innerText = '';
+                document.getElementById('thu5').innerText = '';
+                document.getElementById('fri1').innerText = '大学物理';
+                document.getElementById('fri2').innerText = '理论力学';
+                document.getElementById('fri3').innerText = '';
+                document.getElementById('fri4').innerText = '工程材料基础实验';
+                document.getElementById('fri5').innerText = '';
+                document.getElementById('zhezhao').style.display = 'block';
+            } else {
+                document.getElementById('mon1').innerText = '材料力学';
+                document.getElementById('mon2').innerText = '电工电子学';
+                document.getElementById('mon3').innerText = '体育';
+                document.getElementById('mon4').innerText = '';
+                document.getElementById('mon5').innerText = '习近平思想';
+                document.getElementById('tus1').innerText = '概率论';
+                document.getElementById('tus2').innerText = '机械原理';
+                document.getElementById('tus3').innerText = '';
+                document.getElementById('tus4').innerText = '';
+                document.getElementById('tus5').innerText = '';
+                document.getElementById('wen1').innerText = '复变函数';
+                document.getElementById('wen2').innerText = '概率论';
+                document.getElementById('wen3').innerText = '';
+                document.getElementById('wen4').innerText = '';
+                document.getElementById('wen5').innerText = '';
+                document.getElementById('thu1').innerText = '机械原理';
+                document.getElementById('thu2').innerText = '电子电工学';
+                document.getElementById('thu3').innerText = '计算方法';
+                document.getElementById('thu4').innerText = '';
+                document.getElementById('thu5').innerText = '';
+                document.getElementById('fri1').innerText = '材料力学';
+                document.getElementById('fri2').innerText = '传热学';
+                document.getElementById('fri3').innerText = '材料成形技术基础';
+                document.getElementById('fri4').innerText = '';
+                document.getElementById('fri5').innerText = '';
+                document.getElementById('zhezhao').style.display = 'block';
+            }
+        }else{
+            if (num.value == '一') {
+                document.getElementById('mon1').innerText = '';
+                document.getElementById('mon2').innerText = '高等数学';
+                document.getElementById('mon3').innerText = '大学生生涯规划';
+                document.getElementById('mon4').innerText = '心理健康';
+                document.getElementById('mon5').innerText = '';
+                document.getElementById('tus1').innerText = '中国近代史';
+                document.getElementById('tus2').innerText = '高等数学';
+                document.getElementById('tus3').innerText = '';
+                document.getElementById('tus4').innerText = '';
+                document.getElementById('tus5').innerText = '';
+                document.getElementById('wen1').innerText = '';
+                document.getElementById('wen2').innerText = '英语阅读';
+                document.getElementById('wen3').innerText = '专业导读';
+                document.getElementById('wen4').innerText = '';
+                document.getElementById('wen5').innerText = '';
+                document.getElementById('thu1').innerText = '英语听说';
+                document.getElementById('thu2').innerText = '高等数学';
+                document.getElementById('thu3').innerText = '信息技术应用';
+                document.getElementById('thu4').innerText = '体育';
+                document.getElementById('thu5').innerText = '';
+                document.getElementById('fri1').innerText = '信息技术';
+                document.getElementById('fri2').innerText = '英语听说';
+                document.getElementById('fri3').innerText = '';
+                document.getElementById('fri4').innerText = '中国近代史';
+                document.getElementById('fri5').innerText = '';
+                document.getElementById('zhezhao').style.display = 'block';
+            } else {
+                document.getElementById('mon1').innerText = '大学物理';
+                document.getElementById('mon2').innerText = '工程图学';
+                document.getElementById('mon3').innerText = '工程图学';
+                document.getElementById('mon4').innerText = '';
+                document.getElementById('mon5').innerText = '';
+                document.getElementById('tus1').innerText = '英语阅读';
+                document.getElementById('tus2').innerText = '英语阅读（习题课）';
+                document.getElementById('tus3').innerText = '';
+                document.getElementById('tus4').innerText = '';
+                document.getElementById('tus5').innerText = '物理实验';
+                document.getElementById('wen1').innerText = '高等数学';
+                document.getElementById('wen2').innerText = '工程图学';
+                document.getElementById('wen3').innerText = '工程图学';
+                document.getElementById('wen4').innerText = '';
+                document.getElementById('wen5').innerText = '';
+                document.getElementById('thu1').innerText = '创新创业实践';
+                document.getElementById('thu2').innerText = '英语听说';
+                document.getElementById('thu3').innerText = '体育';
+                document.getElementById('thu4').innerText = '';
+                document.getElementById('thu5').innerText = '思想道德';
+                document.getElementById('fri1').innerText = '大学物理';
+                document.getElementById('fri2').innerText = '高等数学';
+                document.getElementById('fri3').innerText = '高级语言设计';
+                document.getElementById('fri4').innerText = '高级语言设计';
+                document.getElementById('fri5').innerText = '';
+                document.getElementById('zhezhao').style.display = 'block';
+            }
+        }
+
+
+
+
+
+    }
+    function hidder(){
+        document.getElementById('zhezhao').style.display="none";
+    }
+    function hidder_error_card() {
+        document.getElementById('error_card').style.display='none';
+
+    }
+</script>
+</body>

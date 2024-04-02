@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>反馈信息</title>
+
+
+    <script type="text/javascript">
+        window.onload = function(){
+            var wor = document.getElementById("feedback");
+            var len = wor.tBodies[0].rows.length;
+            for(var i=0;i<len;i++){
+                if(i%2==0){
+                    wor.tBodies[0].rows[i].style.backgroundColor="lightblue";
+                }else{
+                    wor.tBodies[0].rows[i].style.backgroundColor="lightcyan";
+                }
+            }
+        }
+    </script>
+
+    <style>
+        table{
+            margin: auto;
+        }
+        body{
+            background: linear-gradient(PeachPuff,Honeydew);;
+        }
+    </style>
+
+</head>
+<body>
+    <h1 style="text-align: center; font-family: 华文楷体; font-size: 50px">&nbsp;反馈信息</h1>
+    <table id="feedback" class="table table-bordered table-hover" style="text-align: center">
+        <tr class="success">
+            <th style="width: 100px; height:40px;">编号</th>
+            <th style="width: 100px;">学号</th>
+            <th style="width: 100px;">问题类型</th>
+            <th style="width: 500px;">问题描述</th>
+        </tr>
+        <tr th:each="fee : ${session.feeList}" style="height: 30px">
+            <td th:text="${fee.f_id}">1</td>
+            <td th:text="${fee.s_id}">2</td>
+            <td th:text="${fee.type}">3</td>
+            <td th:text="${fee.reason}">4</td>
+        </tr>
+    </table>
+    <p style="text-align: center; font-family: 华文楷体; font-size: 25px">
+        <a href="teacher_port.html">返回</a>
+    </p>
+</body>
+</html>

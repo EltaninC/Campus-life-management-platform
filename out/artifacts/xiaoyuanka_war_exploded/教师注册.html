@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="try草稿.css"/>
+</head>
+
+<body align="center" >
+<script>
+    function check(){
+
+        var name=document.getElementById("s_id").value;
+        var n=document.getElementById("sort").value;
+
+        if(name<=9999 &&name>=1000 && n!=null){
+
+            alert("注册成功,初始密码默认为123456，亲爱的"+name+"用户");
+
+            window.document.f.action="首页.html";
+
+            window.document.f.submit();
+
+        }else{
+
+            alert("请输入正确格式");
+
+        }
+
+    }
+</script>
+    <form name="f"  >
+        <div class="box">
+            <div class="input-box">
+                <lable for="s_id">用户</lable>
+                <input type="text" id="s_id" placeholder="请输入教师工号">
+            </div>
+            <div class="input-box">
+                <label for="name">姓名</label>
+                <input type="text" name="name" id="name" placeholder="请输入你的姓名">
+            </div>
+            <div class="input-box">
+                <label for="sort">sort</label>
+                <input type="text" name="sort" id="sort" placeholder="s or t">
+            </div>
+            <div class="input-box">
+                <label for="class">班级</label>
+                <input type="text" name="class" id="class" placeholder="请输入所属班级(全称)">
+            </div>
+            <div class="input-box">
+                <label for="college">学院</label>
+                <input type="text" name="college" id="college" placeholder="请输入所属学院(全称)">
+            </div>
+            <div class="input-box">
+                <label for="job">职务</label>
+                <input type="text" name="job" id="job" placeholder="请输入您的职务老师/辅导员">
+            </div>
+            <div>
+                <lable for="sex">性别</lable>
+                <input type="radio" name="sex" id="male">男
+                <input type="radio" name="sex" id="famale">女
+            </div>
+            <div class="btn-box">
+                <div>
+                    <button type="button" onclick="check()">注册</button>
+                </div>>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

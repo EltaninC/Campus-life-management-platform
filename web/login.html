@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+<form action="/login" method="post">
+    <div class="box">
+        <h2>Login</h2>
+        <div class="input-box">
+            <label>账号</label>
+            <center><input type="text" name="account"></center>
+        </div>
+        <div class="input-box">
+            <label>密码</label>
+            <center><input type="password" name="password"></center>
+        </div>
+        <br>
+        <input type="radio" name="sort" value="s">学生<input type="radio" name="sort" value="t">老师
+        <input type="submit" value="提交">
+    </div>
+</form>
+
+<div class="btn-box"><!--运用css的渲染-->
+    <a href="login.html"><img src="刷新.jpg" title="点击刷新页面" width="20" height="20"></a>
+</div>
+
+</body>
+</html>
